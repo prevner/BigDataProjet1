@@ -1,19 +1,17 @@
 services:
-  # Zookeeper is here to provide shared memory
+  # Zookeeper est là pour faire une mémoire partagée
   zookeeper:
-    image: confluentinc/cp-zookeeper:6.2.0
-    container_name: zookeeper
+    image: wurstmeister/zookeeper
     ports:
       - "2181:2181"
 
-  # Definition of my Kafka broker
+  # Définition de mon broker KAFKA
   kafka:
     image: wurstmeister/kafka
-    container_name: kafka
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_LISTENER: INSIDE_IP
+      KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_CREATE_TOPICS: "test_topic:1:1"
     volumes:
