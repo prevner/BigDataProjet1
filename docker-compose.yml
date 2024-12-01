@@ -30,7 +30,7 @@ services:
     command: python -u producer.py
 
   consumer:
-    build: ./consumer # Fixed: changed from ./producer to ./consumer
+    build: ./consumer 
     volumes:
       - ./consumer:/app
     depends_on:
