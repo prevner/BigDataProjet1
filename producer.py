@@ -19,9 +19,9 @@ while True:
     try:
         response = requests.get(url)
         soup= BeautifulSoup(response.text, 'lxml')
-        # element HTML : span data-testid="TemperatureValue"
+        # element HTML : <span data-testid="TemperatureValue"> </...>
         temp_element = soup.find('span',{'data-testid':'TemperatureValue'})
-        temp_el_clean = temp_element.text.replace('°','')
+        temp_el_clean = temp_element.text.replace('°','') # Parsing
         print(temp_el_clean)
         currentTemp= int(temp_el_clean)
         message = {

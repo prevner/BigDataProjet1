@@ -1,0 +1,72 @@
+{
+  "paragraphs": [
+    {
+      "text": "print(\"Bon appetit!\")",
+      "user": "anonymous",
+      "dateUpdated": "2024-12-10 11:12:23.089",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Bon appetit!"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1733829012619_1993554935",
+      "id": "paragraph_1733829012619_1993554935",
+      "dateCreated": "2024-12-10 11:10:12.620",
+      "dateStarted": "2024-12-10 11:12:23.130",
+      "dateFinished": "2024-12-10 11:12:23.653",
+      "status": "FINISHED"
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1733829047836_679908690",
+      "id": "paragraph_1733829047836_679908690",
+      "dateCreated": "2024-12-10 11:10:47.839",
+      "status": "READY"
+    }
+  ],
+  "name": "exemple1",
+  "id": "2KE4U7FUG",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.11.2",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}
