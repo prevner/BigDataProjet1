@@ -1,7 +1,7 @@
 services:
-# # # # # # # # # # # # # # # # 
-##### Day 2 - EDA / KAFKA #####
-# # # # # # # # # # # # # # # # 
+  # # # # # # # # # # # # # # # #
+  ##### Day 2 - EDA / KAFKA #####
+  # # # # # # # # # # # # # # # #
   # Zookeeper est là pour faire une mémoire partagée
   zookeeper:
     image: wurstmeister/zookeeper
@@ -22,6 +22,18 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    ports:
+      - "8081:8080"
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=kafka:2181
+    depends_on:
+      - kafka
+
   producer:
     build: ./producer
     volumes:
@@ -33,7 +45,7 @@ services:
     command: python -u producer.py
 
   consumer:
-    build: ./consumer 
+    build: ./consumer
     volumes:
       - ./consumer:/app
     depends_on:
@@ -42,9 +54,9 @@ services:
       KAFKA_BROKER: kafka:9092
     command: python -u consumer.py
 
-# # # # # # # # # # # # #
-##### Day 3 - HADOOP ####
-# # # # # # # # # # # # # 
+  # # # # # # # # # # # # #
+  ##### Day 3 - HADOOP ####
+  # # # # # # # # # # # # #
   namenode: # Controle le stockage dans les datanode
     image: apache/hadoop:3.4.1 #CentOS7
     hostname: namenode
@@ -63,25 +75,25 @@ services:
 
   datanode_1: # Stocke des datablocks
     image: apache/hadoop:3.4.1
-    command: ['hdfs', 'datanode']
+    command: ["hdfs", "datanode"]
     env_file:
       - ./config.env
   datanode_2: # Stocke des datablocks
     image: apache/hadoop:3.4.1
-    command: ['hdfs', 'datanode']
+    command: ["hdfs", "datanode"]
     env_file:
       - ./config.env
 
   resourcemanager: # gestion des ressources
     image: apache/hadoop:3.4.1
     hostname: resourcemanager
-    command: ['yarn','resourcemanager'] # Commande de démarrage du resource manager YARN
+    command: ["yarn", "resourcemanager"] # Commande de démarrage du resource manager YARN
     ports:
       - 8088:8088 # YARN webUI
     env_file:
       - ./config.env
   nodemanager: #  Gestion des noeuds
     image: apache/hadoop:3.4.1
-    command: ['yarn','nodemanager']
+    command: ["yarn", "nodemanager"]
     env_file:
       - ./config.env
