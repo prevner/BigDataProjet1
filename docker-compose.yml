@@ -18,7 +18,7 @@ services:
       KAFKA_LISTENERS: INTERNAL://0.0.0.0:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_CREATE_TOPICS: "test_topic:1:1"
+      KAFKA_CREATE_TOPICS: "velib_topic:1:1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -71,8 +71,21 @@ services:
     environment:
       # Définition du répertoire de stockage des métadonnées du NameNode
       ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
-    command: bash -c "sudo sed -i -e '/^mirrorlist/d;/^#baseurl=/{s,^#,,;s,/mirror,/vault,;}' /etc/yum.repos.d/CentOS*.repo && sudo yum -y update && sudo yum clean all && sudo yum install -y make && sudo make install-spark && make install-zepplin && make start-namenode"
-
+    command: bash -c "\
+      if ! rpm -q make > /dev/null 2>&1; then \
+        echo 'Make not found. Installing...'; \
+        sudo sed -i -e '/^mirrorlist/d;/^#baseurl=/{s,^#,,;s,/mirror,/vault,;}' /etc/yum.repos.d/CentOS*.repo && \
+        sudo yum -y update && \
+        sudo yum clean all && \
+        sudo yum install -y make; \
+      else \
+        echo 'Make is already installed.'; \
+      fi && \
+      sudo make install-spark; \
+      sudo make install-python3; \
+      make install-zeppelin; \
+      make start-namenode"
+      
   datanode_1: # Stocke des datablocks
     image: apache/hadoop:3.4.1
     command: ["hdfs", "datanode"]
