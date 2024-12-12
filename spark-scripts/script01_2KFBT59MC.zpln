@@ -1,0 +1,136 @@
+{
+  "paragraphs": [
+    {
+      "text": "%pyspark\nbike_data \u003d spark.read.option(\"header\", True).csv(\"hdfs://namenode:8020/datahadoop/london_merged.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "2024-12-12 03:35:04.352",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://namenode:4040/jobs/job?id\u003d0"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1733974394292_614788249",
+      "id": "paragraph_1733974394292_614788249",
+      "dateCreated": "2024-12-12 03:33:14.293",
+      "dateStarted": "2024-12-12 03:35:04.434",
+      "dateFinished": "2024-12-12 03:35:55.783",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%pyspark\nbike_data.show()",
+      "user": "anonymous",
+      "dateUpdated": "2024-12-12 03:35:31.347",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------------------+----+---+----+-----+----------+------------+----------+----------+------+\n|          timestamp| cnt| t1|  t2|  hum|wind_speed|weather_code|is_holiday|is_weekend|season|\n+-------------------+----+---+----+-----+----------+------------+----------+----------+------+\n|2015-01-04 00:00:00| 182|3.0| 2.0| 93.0|       6.0|         3.0|       0.0|       1.0|   3.0|\n|2015-01-04 01:00:00| 138|3.0| 2.5| 93.0|       5.0|         1.0|       0.0|       1.0|   3.0|\n|2015-01-04 02:00:00| 134|2.5| 2.5| 96.5|       0.0|         1.0|       0.0|       1.0|   3.0|\n|2015-01-04 03:00:00|  72|2.0| 2.0|100.0|       0.0|         1.0|       0.0|       1.0|   3.0|\n|2015-01-04 04:00:00|  47|2.0| 0.0| 93.0|       6.5|         1.0|       0.0|       1.0|   3.0|\n|2015-01-04 05:00:00|  46|2.0| 2.0| 93.0|       4.0|         1.0|       0.0|       1.0|   3.0|\n|2015-01-04 06:00:00|  51|1.0|-1.0|100.0|       7.0|         4.0|       0.0|       1.0|   3.0|\n|2015-01-04 07:00:00|  75|1.0|-1.0|100.0|       7.0|         4.0|       0.0|       1.0|   3.0|\n|2015-01-04 08:00:00| 131|1.5|-1.0| 96.5|       8.0|         4.0|       0.0|       1.0|   3.0|\n|2015-01-04 09:00:00| 301|2.0|-0.5|100.0|       9.0|         3.0|       0.0|       1.0|   3.0|\n|2015-01-04 10:00:00| 528|3.0|-0.5| 93.0|      12.0|         3.0|       0.0|       1.0|   3.0|\n|2015-01-04 11:00:00| 727|2.0|-1.5|100.0|      12.0|         3.0|       0.0|       1.0|   3.0|\n|2015-01-04 12:00:00| 862|2.0|-1.5| 96.5|      13.0|         4.0|       0.0|       1.0|   3.0|\n|2015-01-04 13:00:00| 916|3.0|-0.5| 87.0|      15.0|         3.0|       0.0|       1.0|   3.0|\n|2015-01-04 14:00:00|1039|2.5| 0.0| 90.0|       8.0|         3.0|       0.0|       1.0|   3.0|\n|2015-01-04 15:00:00| 869|2.0|-1.5| 93.0|      11.0|         3.0|       0.0|       1.0|   3.0|\n|2015-01-04 16:00:00| 737|3.0| 0.0| 93.0|      12.0|         3.0|       0.0|       1.0|   3.0|\n|2015-01-04 17:00:00| 594|3.0| 0.0| 93.0|      11.0|         3.0|       0.0|       1.0|   3.0|\n|2015-01-04 18:00:00| 522|3.0| 1.5| 93.0|       6.5|         3.0|       0.0|       1.0|   3.0|\n|2015-01-04 19:00:00| 379|3.0| 1.0| 93.0|       7.0|         3.0|       0.0|       1.0|   3.0|\n+-------------------+----+---+----+-----+----------+------------+----------+----------+------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://namenode:4040/jobs/job?id\u003d1"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1733974504428_2019952011",
+      "id": "paragraph_1733974504428_2019952011",
+      "dateCreated": "2024-12-12 03:35:04.428",
+      "dateStarted": "2024-12-12 03:35:55.805",
+      "dateFinished": "2024-12-12 03:35:56.812",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%pyspark\n",
+      "user": "anonymous",
+      "dateUpdated": "2024-12-12 03:35:31.380",
+      "progress": 0,
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1733974531380_709311599",
+      "id": "paragraph_1733974531380_709311599",
+      "dateCreated": "2024-12-12 03:35:31.380",
+      "status": "READY"
+    }
+  ],
+  "name": "script01",
+  "id": "2KFBT59MC",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.11.2",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}
