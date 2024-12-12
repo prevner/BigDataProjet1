@@ -8,7 +8,7 @@ def json_serializer(data):
 
 # Vérifiez l'adresse et le port du serveur Kafka
 producer = KafkaProducer(
-    bootstrap_servers=['kafka:9092'],  # Assurez-vous que cette adresse est correcte
+    bootstrap_servers=['kafka:9092', 'kafka2:9093'],  # Assurez-vous que cette adresse est correcte
     value_serializer=json_serializer
 )
 

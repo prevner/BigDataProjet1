@@ -11,7 +11,7 @@ def json_deserializer(data):
 # Initialisation du KafkaConsumer
 consumer = KafkaConsumer(
     'velib_topic',  # Assurez-vous que le topic correspond à celui utilisé par le producer
-    bootstrap_servers=['kafka:9092'],
+    bootstrap_servers=['kafka:9092','kafka2:9093'],
     value_deserializer=json_deserializer,
     auto_offset_reset='earliest',  # Lire depuis le début si aucun offset n'est présent
     enable_auto_commit=False,  # Sauvegarde automatique des offsets
