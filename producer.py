@@ -9,7 +9,7 @@ def json_serializer(data):
 
 # Création du producer qui pointe vers notre cluster Kafka (localhost:9092)
 producer = KafkaProducer(
-    bootstrap_servers=['kafka:9092'],
+    bootstrap_servers=['127.0.0.1:9092','127.0.0.1:9093','127.0.0.1:9094'],
     value_serializer=json_serializer
 )
 
@@ -19,9 +19,9 @@ while True:
     try:
         response = requests.get(url)
         soup= BeautifulSoup(response.text, 'lxml')
-        # element HTML : <span data-testid="TemperatureValue"> </...>
+        # element HTML : span data-testid="TemperatureValue"
         temp_element = soup.find('span',{'data-testid':'TemperatureValue'})
-        temp_el_clean = temp_element.text.replace('°','') # Parsing
+        temp_el_clean = temp_element.text.replace('°','')
         print(temp_el_clean)
         currentTemp= int(temp_el_clean)
         message = {

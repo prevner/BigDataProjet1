@@ -1,0 +1,76 @@
+{
+  "paragraphs": [
+    {
+      "text": "%spark.pyspark\r\n\r\nfrom pyspark.sql import SparkSession\r\n\r\n# Kafka broker and topic\r\nkafka_broker \u003d \"kafka:9092,kafka:9093\"\r\nkafka_topic \u003d \"velib_topic\"\r\n\r\n# Initialize Spark Session\r\nspark \u003d SparkSession.builder \\\r\n    .appName(\"KafkaSparkMemorySink\") \\\r\n    .getOrCreate()\r\n\r\n# Read data from Kafka topic\r\nkafka_stream \u003d spark.readStream \\\r\n    .format(\"kafka\") \\\r\n    .option(\"kafka.bootstrap.servers\", kafka_broker) \\\r\n    .option(\"subscribe\", kafka_topic) \\\r\n    .option(\"startingOffsets\", \"latest\") \\\r\n    .load()\r\n\r\n# Select message value and convert to string\r\nmessages \u003d kafka_stream.selectExpr(\"CAST(value AS STRING) as message\")\r\n\r\n# Write to memory sink\r\nquery \u003d messages.writeStream \\\r\n    .outputMode(\"append\") \\\r\n    .format(\"memory\") \\\r\n    .queryName(\"kafka_messages\") \\\r\n    .start()\r\n\r\n# Simulate processing\r\nimport time\r\nprint(\"Streaming started... Run the following to view data:\")\r\nprint(\"spark.sql(\u0027SELECT * FROM kafka_messages\u0027).show()\")\r\n\r\n# Let the stream run indefinitely\r\ntry:\r\n    while True:\r\n        time.sleep(10)\r\n        spark.sql(\"SELECT * FROM kafka_messages\").show(truncate\u003dFalse)\r\nexcept KeyboardInterrupt:\r\n    print(\"Stream stopped.\")\r\n    query.stop()    ",
+      "user": "anonymous",
+      "dateUpdated": "2024-12-12 11:57:05.174",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Fail to execute line 19:     .option(\"startingOffsets\", \"latest\") \\\r\nTraceback (most recent call last):\n  File \"/tmp/python4742738258777767134/zeppelin_python.py\", line 162, in \u003cmodule\u003e\n    exec(code, _zcUserQueryNameSpace)\n  File \"\u003cstdin\u003e\", line 19, in \u003cmodule\u003e\n  File \"/opt/spark/spark-3.5.0-bin-hadoop3/python/pyspark/sql/streaming/readwriter.py\", line 304, in load\n    return self._df(self._jreader.load())\n  File \"/opt/spark/spark-3.5.0-bin-hadoop3/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py\", line 1323, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/opt/spark/spark-3.5.0-bin-hadoop3/python/pyspark/errors/exceptions/captured.py\", line 185, in deco\n    raise converted from None\npyspark.errors.exceptions.captured.AnalysisException: Failed to find data source: kafka. Please deploy the application as per the deployment section of Structured Streaming + Kafka Integration Guide.\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1733999831372_1825052542",
+      "id": "paragraph_1733999831372_1825052542",
+      "dateCreated": "2024-12-12 10:37:11.372",
+      "dateStarted": "2024-12-12 11:57:05.245",
+      "dateFinished": "2024-12-12 11:57:06.233",
+      "status": "ERROR"
+    },
+    {
+      "text": "%spark.pyspark\n",
+      "user": "anonymous",
+      "dateUpdated": "2024-12-12 11:45:32.023",
+      "progress": 0,
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1734003931993_959780223",
+      "id": "paragraph_1734003931993_959780223",
+      "dateCreated": "2024-12-12 11:45:32.023",
+      "status": "READY"
+    }
+  ],
+  "name": "micro_processing",
+  "id": "2KEDXRJU4",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.11.2",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {
+    "isRunning": false
+  }
+}

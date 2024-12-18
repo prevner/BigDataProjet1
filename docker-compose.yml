@@ -18,7 +18,25 @@ services:
       KAFKA_LISTENERS: INTERNAL://0.0.0.0:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_CREATE_TOPICS: "test_topic:1:1"
+      KAFKA_BROKER_ID: 1
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
+      KAFKA_CREATE_TOPICS: "velib_topic:1:2"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    # Deuxième broker Kafka
+  kafka2:
+    image: wurstmeister/kafka
+    ports:
+      - "9093:9093"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_BROKER_ID: 2
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -29,10 +47,11 @@ services:
       - "8081:8080"
     environment:
       - KAFKA_CLUSTERS_0_NAME=local
-      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092,kafka2:9093
       - KAFKA_CLUSTERS_0_ZOOKEEPER=kafka:2181
     depends_on:
       - kafka
+      - kafka2
 
   producer:
     build: ./producer
@@ -71,8 +90,21 @@ services:
     environment:
       # Définition du répertoire de stockage des métadonnées du NameNode
       ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
-    command: bash -c "sudo sed -i -e '/^mirrorlist/d;/^#baseurl=/{s,^#,,;s,/mirror,/vault,;}' /etc/yum.repos.d/CentOS*.repo && sudo yum -y update && sudo yum clean all && sudo yum install -y make && sudo make install-spark && make install-zepplin && make start-namenode"
-
+    command: bash -c "\
+      if ! rpm -q make > /dev/null 2>&1; then \
+        echo 'Make not found. Installing...'; \
+        sudo sed -i -e '/^mirrorlist/d;/^#baseurl=/{s,^#,,;s,/mirror,/vault,;}' /etc/yum.repos.d/CentOS*.repo && \
+        sudo yum -y update && \
+        sudo yum clean all && \
+        sudo yum install -y make; \
+      else \
+        echo 'Make is already installed.'; \
+      fi && \
+      sudo make install-spark; \
+      sudo make install-python3; \
+      make install-zeppelin; \
+      make start-namenode"
+      
   datanode_1: # Stocke des datablocks
     image: apache/hadoop:3.4.1
     command: ["hdfs", "datanode"]
